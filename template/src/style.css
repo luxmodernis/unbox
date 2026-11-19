@@ -19,6 +19,14 @@ html, body { height: 100%; overflow: hidden; background: #000; color: #fff; font
 /* Ne pas utiliser position: sticky dans #app (repositionné avec retard sur iOS) : préférer position: fixed. */
 
 /* version du build (site de test uniquement) */
-.build-tag { position: fixed; left: 0; bottom: calc(0px + env(safe-area-inset-bottom)); z-index: 200; padding: 8px; pointer-events: none; font: 500 9px/1 var(--font); color: rgba(255, 255, 255, 0.55); text-shadow: 0 0 3px rgba(0, 0, 0, 0.8); }
+/* bandeau du mode dev (npm run dev et site de test, jamais en production) : fil d'ariane à gauche, version à droite.
+   Il réserve sa propre hauteur (#app s'arrête au-dessus) : il ne masque jamais le contenu. */
+:root { --devbar-h: 22px; }
+.devbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 200; height: calc(var(--devbar-h) + env(safe-area-inset-bottom)); padding: 0 8px env(safe-area-inset-bottom); display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #111; border-top: 1px solid #333; font: 500 10px/1 var(--font); color: rgba(255, 255, 255, 0.7); white-space: nowrap; }
+.devbar-crumb { color: inherit; text-decoration: none; overflow: hidden; text-overflow: ellipsis; }
+body.dev #app { bottom: calc(var(--devbar-h) + env(safe-area-inset-bottom)); }
+.dev-index { width: var(--col); margin: 0 auto; padding: 24px; display: flex; flex-direction: column; gap: 8px; }
+.dev-index a { color: #8cf; }
+.dev-index ul { padding-left: 20px; }
 
 .c1-section { width: var(--col); min-height: var(--vh); margin: 0 auto; padding: 24px; display: flex; flex-direction: column; justify-content: center; gap: 16px; }

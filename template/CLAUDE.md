@@ -14,8 +14,8 @@ Le travail est découpé en **une conversation par chapitre / partie**, plus **u
 
 | Conversation | Possède | Ne fait pas |
 |---|---|---|
-| **Hub déploiement** | styles et composants communs (boutons, textes, couleurs, polices, transitions), `main.ts`, `state.ts`, `scorm.ts`, routage, `tools/`, déploiement, jalons, `CLAUDE.md`, `docs/` | le contenu d'un chapitre |
-| **Chapitre N** | `chapterN*.ts`, ses assets (`src/assets/chN/`, `public/Chap-N/`), ses règles CSS préfixées `.cN-…`, ses clés `chN.*` dans `texts/en.json` | tout style global, composant commun, `main.ts`, `state.ts`, `tools/`, push, déploiement |
+| **Hub déploiement** | styles et composants communs (boutons, textes, couleurs, polices, transitions), `main.ts`, `state.ts`, `scorm.ts`, `router.ts`, `dev.ts`, `devtools.ts`, `tools/`, déploiement, jalons, `CLAUDE.md`, `docs/` | le contenu d'un chapitre |
+| **Chapitre N** | `chapterN*.ts`, ses assets (`src/assets/chN/`, `public/Chap-N/`), ses règles CSS préfixées `.cN-…`, ses clés `chN.*` dans `texts/en.json`, sa propre ligne dans `src/chapters.ts` | tout style global, composant commun, `main.ts`, `state.ts`, `tools/`, push, déploiement |
 
 - Un chapitre qui a besoin d'un réglage commun **ne le fabrique pas** : il écrit au hub.
 - Chaque conversation de chapitre commite **uniquement ses fichiers** (`git add <ses fichiers>`, jamais `git add -A`), message « Chapitre N : … ». Elle ne pousse pas et ne déploie pas.
@@ -29,7 +29,10 @@ Le travail est découpé en **une conversation par chapitre / partie**, plus **u
 - **« pousse et déploie »** (ou « déploie sur Vercel ») = lancer directement `npm run deploy -- "message"`, sans demander de confirmation, puis donner l'adresse du site. Si des fichiers d'autres conversations ne sont pas committés, la commande s'arrête et les liste : demander au hub / à l'utilisateur avant d'utiliser `--all`.
 - Le dépôt GitHub reste **toujours privé**. Le déploiement Vercel se fait depuis un dossier hors git (`../deploy-{{SLUG}}`), voir `tools/README-deploy.md`.
 - `npm run check` = contrôles sans déployer. `npm run jalon -- nom "description"` = étiquette sur un état validé.
-- **Version** : un petit texte en bas à gauche (`commit · date`) s'affiche sur `*.vercel.app` uniquement, jamais dans un package SCORM. Il permet de vérifier qu'on regarde la bonne version : « + » après le commit = fichiers modifiés non committés.
+- **Mode dev** (`npm run dev` et site de test `*.vercel.app` ; jamais dans un package SCORM ou HTML, qui ne sont pas servis depuis `vercel.app`) :
+  - un **bandeau en bas** : fil d'ariane (chapitre › écran) à gauche, version (`commit · date`) à droite. Une capture d'écran suffit à dire à Claude où on est et quelle version on regarde ; « + » après le commit = fichiers modifiés non committés. Cliquer sur le fil d'ariane ouvre le plan.
+  - des **URL complètes par écran** : `#/ch/2/3` = chapitre 2, écran 3 ; `#/dev` = plan de tous les écrans, avec leurs liens. En production, il n'y a qu'une seule URL pour tout le parcours.
+  - Chaque chapitre déclare ses écrans dans `src/chapters.ts` (clés de texte des titres) et navigue avec `go(chapitre, ecran)` de `src/router.ts`, jamais avec `location`. Le fil d'ariane et le plan se mettent à jour tout seuls.
 
 ## [TEXTES] Textes et traduction
 

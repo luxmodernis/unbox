@@ -17,7 +17,7 @@ Il faut seulement avoir **un compte GitHub** et **un compte Vercel**, et avoir d
 Lis https://raw.githubusercontent.com/luxmodernis/unbox/main/BRIEF.md et suis-le à la lettre pour installer mon projet.
 ```
 
-Claude vous pose quelques questions (SCORM ou site web, mobile ou responsive, textes à traduire), puis installe tout : projet, GitHub privé, Vercel, version en bas à gauche, organisation en conversations parallèles.
+Claude vous pose quelques questions (SCORM ou site web, mobile ou responsive, textes à traduire), puis installe tout : projet, GitHub privé, Vercel, bandeau fil d'ariane et version en bas, organisation en conversations parallèles.
 
 Le projet installé règle ensuite Sonnet avec un effort moyen pour toutes les conversations de ce dossier (`.claude/settings.json`) ; le sélecteur de l'application peut toujours passer outre.
 

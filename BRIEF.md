@@ -12,7 +12,7 @@ Le kit complet (ce brief + le dossier `template/`) est dans le dépôt public `h
 - Un dépôt **GitHub privé** dans l'organisation `luxmodernis`.
 - Un site de test **Vercel** (offre gratuite, équipe `lux-modernis`) déployé en une commande, avec le contournement « dossier hors git » qui permet de garder le dépôt privé.
 - Le mot magique : quand la personne dit **« pousse et déploie »**, tu lances `npm run deploy` toi-même, sans redemander, et tu donnes l'adresse.
-- Une **étiquette de version** en bas à gauche du site de test (commit + heure) pour vérifier qu'on regarde la bonne version.
+- Un **bandeau en bas** en mode dev et sur le site de test (jamais dans un package) : fil d'ariane (chapitre › écran) et version (commit + heure), pour que les captures d'écran donnent le contexte sans rien préciser. En mode dev, chaque écran a aussi une **URL complète** (`#/ch/2/3`, plan sur `#/dev`) pour naviguer vite.
 - Une organisation en **conversations parallèles** (une par chapitre, plus le hub) qui se parlent pour ne pas s'écraser.
 - Selon les réponses : paquet **SCORM**, fichier de **textes séparé** pour la traduction, **responsive** mobile ou mobile / tablette / desktop.
 
@@ -59,13 +59,13 @@ Récapitule les réponses en quelques lignes et fais valider avant d'installer. 
    |---|---|
    | Site web simple | supprimer `src/scorm.ts`, `tools/package-scorm.mjs`, le script `scorm` et `adm-zip` de `package.json`, la section `[SCORM]` de `CLAUDE.md` ; dans `src/state.ts`, retirer les appels à `scorm*` (ne garder que le repli `localStorage`) |
    | Module SCORM | garder tout ; mettre à jour `TOTAL_CHAPTERS` dans `src/state.ts` selon le découpage |
-   | Textes non séparés | supprimer `tools/check-i18n.mjs`, `texts/`, `src/i18n.ts`, la section `[TEXTES]` de `CLAUDE.md` ; remplacer les `t('…')` des fichiers d'exemple par le texte direct ; retirer `node tools/check-i18n.mjs &&` du script `check` et du `deploy.mjs` s'il y est référencé |
+   | Textes non séparés | supprimer `tools/check-i18n.mjs`, `texts/`, `src/i18n.ts`, la section `[TEXTES]` de `CLAUDE.md` ; remplacer les `t('…')` des fichiers d'exemple par le texte direct (y compris les clés de titres dans `src/chapters.ts` et les `t(…)` de `src/router.ts`) ; retirer `node tools/check-i18n.mjs &&` du script `check` et du `deploy.mjs` s'il y est référencé |
    | Textes séparés | garder ; ajouter chaque langue cible dans `LANGUAGES` (`src/i18n.ts`) ; créer `public/texts/<code>.json` avec `{ "_partial": true }` |
    | Mobile uniquement | garder la section `[MOBILE]`, supprimer `[MULTI]` |
    | Responsive 3 tailles | garder `[MULTI]`, supprimer `[MOBILE]` ; dans `style.css`, passer `--col` à `100vw` et ajouter les media queries `768px` et `1100px` |
 
    Supprime ensuite les lignes de marqueurs `[SCORM]`, `[TEXTES]`, `[MOBILE]`, `[MULTI]` dans les titres de `CLAUDE.md` et le commentaire HTML en tête.
-4. **Chapitres** : crée un fichier `src/chapterN.ts` par chapitre à partir de `src/chapter1.ts` (et ses clés `chN.*` si les textes sont séparés), branche-les dans `main.ts` avec un routage minimal par `location.hash` (`#/ch/1`, `#/ch/2`…), et mets `TOTAL_CHAPTERS` à jour.
+4. **Chapitres** : crée un fichier `src/chapterN.ts` par chapitre à partir de `src/chapter1.ts` (et ses clés `chN.*` si les textes sont séparés), déclare-les dans `src/chapters.ts` (une entrée par chapitre avec la liste des écrans : le routeur, le fil d'ariane et les URL du mode dev s'en servent, rien à brancher dans `main.ts`), et mets `TOTAL_CHAPTERS` à jour. Chaque chapitre exporte `mount(root, ecran)` et change d'écran avec `go(chapitre, ecran)`.
    Pour une expérience fluide sur des téléphones peu puissants, affiche le premier chapitre tout de suite et charge les suivants petit à petit en arrière-plan (`import('./chapterN')` dans le routage, préchargé pendant la lecture ; le module étant téléchargé en local par le LMS, le réseau n'est pas en cause).
 5. `npm install`, puis `npm run check` : tout doit passer. Corrige avant de continuer. Ouvre `npm run dev` pour vérifier visuellement la page (utilise le navigateur intégré si tu en as un).
 
@@ -98,7 +98,7 @@ Je ne peux pas me connecter à la place de la personne. Guide-la, une commande �
 
 Pourquoi ce détour : Vercel (offre gratuite) bloque les déploiements reliés à un dépôt quand l'e-mail du commit n'est pas celui d'un membre de l'équipe. En déployant un dossier hors git, le dépôt reste privé et rien ne bloque. `npm run deploy` remplit ce dossier avec le build, ajoute `noindex` et lance `vercel --prod`.
 
-Quand c'est lié, lance `npm run deploy -- "Premier déploiement"`, récupère l'adresse (`https://<slug>.vercel.app` ou voisine), mets-la dans `{{VERCEL_URL}}` de `CLAUDE.md`, ouvre-la et vérifie que l'**étiquette de version** apparaît en bas à gauche.
+Quand c'est lié, lance `npm run deploy -- "Premier déploiement"`, récupère l'adresse (`https://<slug>.vercel.app` ou voisine), mets-la dans `{{VERCEL_URL}}` de `CLAUDE.md`, ouvre-la et vérifie que le **bandeau du bas** (fil d'ariane et version) apparaît.
 
 ## Étape 5 : le hub et les conversations de chapitre
 

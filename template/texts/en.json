@@ -1,5 +1,9 @@
 {
   "ui.start": "Start",
+  "ui.next": "Next",
   "ch1.title": "Chapter 1",
-  "ch1.intro": "This is the placeholder content of chapter 1."
+  "ch1.screen1": "Introduction",
+  "ch1.screen2": "Conclusion",
+  "ch1.intro": "This is the placeholder content of chapter 1.",
+  "ch1.end": "This is the last screen of chapter 1."
 }

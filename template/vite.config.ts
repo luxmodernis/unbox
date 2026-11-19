@@ -1,7 +1,7 @@
 import { execSync } from 'node:child_process';
 import { defineConfig } from 'vite';
 
-// version affichée en petit en bas à gauche du site de test : commit + heure du build ("+" = fichiers modifiés non committés)
+// version affichée à droite du bandeau du mode dev (src/devtools.ts) : commit + heure du build ("+" = fichiers modifiés non committés)
 const git = (c: string) => { try { return execSync(`git ${c}`, { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim(); } catch { return ''; } };
 const BUILD = `${git('rev-parse --short HEAD') || 'dev'}${git('status --porcelain') ? '+' : ''} · ${new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris', dateStyle: 'short', timeStyle: 'short' })}`;
 

@@ -1,6 +1,6 @@
 import './style.css';
-import { mountChapter1 } from './chapter1';
 import { setLanguage } from './i18n';
+import { start } from './router';
 import { initState } from './state';
 
 const app = document.getElementById('app')!;
@@ -10,13 +10,5 @@ const setVh = () => document.documentElement.style.setProperty('--vh', `${app.cl
 new ResizeObserver(setVh).observe(app);
 setVh();
 
-// numéro de version, uniquement sur le site de test Vercel (jamais dans un package SCORM)
-if (location.hostname.endsWith('vercel.app')) {
-  const v = document.createElement('div');
-  v.className = 'build-tag';
-  v.textContent = __BUILD__;
-  document.body.append(v);
-}
-
 initState();
-setLanguage('en').then(() => mountChapter1(app));
+setLanguage('en').then(() => start(app));
