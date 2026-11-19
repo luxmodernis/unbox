@@ -29,6 +29,8 @@ gh --version
 - **Node 20 ou plus**, **git** et **`gh`** (GitHub CLI) sont nécessaires. **Installe toi-même ce qui manque**, sans renvoyer la personne vers des sites : annonce en une phrase ce que tu installes, puis lance la commande (la personne l'approuve dans l'application).
   - **Mac** : si `brew` manque, ne l'installe pas en silence : propose-le et, s'il faut un mot de passe administrateur, la personne le tape elle-même dans le terminal. Puis `brew install node git gh`. Pour git seul, `xcode-select --install` convient aussi.
   - **PC** : `winget install OpenJS.NodeJS.LTS Git.Git GitHub.cli` (une commande par paquet si besoin). Après l'installation, un terminal neuf est parfois nécessaire pour que les commandes soient trouvées : relance les vérifications, et demande de rouvrir l'application seulement si elles échouent encore.
+  - **PC, piège fréquent** : si PowerShell répond que l'exécution de scripts est désactivée (souvent sur `npm` ou `npx`), la personne doit lancer elle-même `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` dans PowerShell (c'est un réglage de sécurité de son ordinateur : tu ne le lances pas). Alternative sans rien changer : utiliser l'invite de commandes (cmd) ou Git Bash pour les commandes `npm` / `npx`.
+  - **PC** : les commandes de ce brief sont écrites pour Mac ; adapte-les (`cp -R`, `sed -i`, `rm`, `&&`…) à l'interpréteur réellement utilisé (PowerShell, cmd ou Git Bash), sans changer ce qu'elles font. Les scripts du projet (`npm run …`, `tools/*.mjs`) sont en Node et marchent tels quels.
   - Si une installation automatique échoue, explique l'erreur simplement et donne le site officiel (nodejs.org, git-scm.com, cli.github.com) en dernier recours.
 - Ensuite la personne doit lancer `gh auth login` (compte GitHub membre de l'organisation `luxmodernis`). Tu ne saisis jamais de mot de passe ni de jeton à sa place : donne-lui la commande à lancer elle-même, dans l'onglet Terminal.
 - Vérifie le dossier courant : s'il contient déjà un projet, arrête-toi et demande. S'il se trouve dans `.claude/worktrees/`, préviens que le hub doit travailler directement dans le dossier du projet (sans worktree) et demande de recréer l'environnement.
@@ -51,7 +53,7 @@ Récapitule les réponses en quelques lignes et fais valider avant d'installer. 
    ```bash
    git clone --depth 1 https://github.com/luxmodernis/unbox.git <dossier-temporaire>
    ```
-   Copie avec une commande qui marche sur le système de la personne (`cp -R <tmp>/template/. .` sur Mac, `Copy-Item -Recurse` ou `xcopy` sur PC). Pense aux fichiers cachés (`.gitignore`).
+   Copie avec une commande qui marche sur le système de la personne : `cp -R <tmp>/template/. .` sur Mac ; sur PC, `xcopy "<tmp>\template" . /E /H /I /Y` (ou `Copy-Item -Path "<tmp>\template\*" -Destination . -Recurse -Force`). Vérifie ensuite que `.gitignore`, `.claude/settings.json` et `.gitattributes` sont bien présents, puis supprime le clone (sur PC, les fichiers de `.git` sont en lecture seule : `rmdir /s /q` ou `Remove-Item -Recurse -Force`).
 2. Remplace les marqueurs dans les fichiers copiés : `{{SLUG}}`, `{{TITLE}}`, `{{DESCRIPTION}}`, `{{GITHUB_REPO}}` (`luxmodernis/<slug>`), `{{VERCEL_URL}}` (à compléter à l'étape 4), `{{TYPE}}`, `{{ECRANS}}`, `{{TEXTES}}`. Fichiers concernés : `package.json`, `index.html`, `CLAUDE.md`, `docs/REGLES-CHAPITRES.md`, `tools/README-deploy.md`.
 3. **Élague selon les réponses** :
 
