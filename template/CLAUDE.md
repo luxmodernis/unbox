@@ -28,6 +28,7 @@ Le travail est découpé en **une conversation par chapitre / partie**, plus **u
 - **« pousse »** = commit + push GitHub seulement.
 - **« pousse et déploie »** (ou « déploie sur Vercel ») = lancer directement `npm run deploy -- "message"`, sans demander de confirmation, puis donner l'adresse du site. Si des fichiers d'autres conversations ne sont pas committés, la commande s'arrête et les liste : demander au hub / à l'utilisateur avant d'utiliser `--all`.
 - Le dépôt GitHub reste **toujours privé**. Le déploiement Vercel se fait depuis un dossier hors git (`../deploy-{{SLUG}}`), voir `tools/README-deploy.md`.
+- **PC** : si PowerShell refuse `npm` ou `npx` (scripts désactivés), utiliser `npm.cmd` / `npx.cmd` (ou `cmd /c`), sans jamais modifier le réglage de sécurité de l'ordinateur.
 - `npm run check` = contrôles sans déployer. `npm run jalon -- nom "description"` = étiquette sur un état validé.
 - **Mode dev** (`npm run dev` et site de test `*.vercel.app` ; jamais dans un package SCORM ou HTML, qui ne sont pas servis depuis `vercel.app`) :
   - un **bandeau en bas** : fil d'ariane (chapitre › écran) à gauche, version (`commit · date`) à droite. Une capture d'écran suffit à dire à Claude où on est et quelle version on regarde ; « + » après le commit = fichiers modifiés non committés. Cliquer sur le fil d'ariane ouvre le plan.

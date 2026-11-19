@@ -29,7 +29,7 @@ gh --version
 - **Node 20 ou plus**, **git** et **`gh`** (GitHub CLI) sont nécessaires. **Installe toi-même ce qui manque**, sans renvoyer la personne vers des sites : annonce en une phrase ce que tu installes, puis lance la commande (la personne l'approuve dans l'application).
   - **Mac** : si `brew` manque, ne l'installe pas en silence : propose-le et, s'il faut un mot de passe administrateur, la personne le tape elle-même dans le terminal. Puis `brew install node git gh`. Pour git seul, `xcode-select --install` convient aussi.
   - **PC** : `winget install OpenJS.NodeJS.LTS Git.Git GitHub.cli` (une commande par paquet si besoin). Après l'installation, un terminal neuf est parfois nécessaire pour que les commandes soient trouvées : relance les vérifications, et demande de rouvrir l'application seulement si elles échouent encore.
-  - **PC, piège fréquent** : si PowerShell répond que l'exécution de scripts est désactivée (souvent sur `npm` ou `npx`), la personne doit lancer elle-même `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` dans PowerShell (c'est un réglage de sécurité de son ordinateur : tu ne le lances pas). Alternative sans rien changer : utiliser l'invite de commandes (cmd) ou Git Bash pour les commandes `npm` / `npx`.
+  - **PC, PowerShell bloque parfois les scripts** (message « l'exécution de scripts est désactivée » sur `npm` ou `npx`). Ne demande jamais à la personne de changer ce réglage de sécurité et ne le change pas toi-même. Contourne-le : sur PC, lance toujours **`npm.cmd`** et **`npx.cmd`** (jamais bloqués) à la place de `npm` et `npx`, ou passe par `cmd /c`. Quand tu donnes à la personne une commande à lancer, écris-la déjà sous cette forme (ex. `npx.cmd vercel login`). Ce contournement s'applique à tout le brief et aux commandes que tu donneras plus tard.
   - **PC** : les commandes de ce brief sont écrites pour Mac ; adapte-les (`cp -R`, `sed -i`, `rm`, `&&`…) à l'interpréteur réellement utilisé (PowerShell, cmd ou Git Bash), sans changer ce qu'elles font. Les scripts du projet (`npm run …`, `tools/*.mjs`) sont en Node et marchent tels quels.
   - Si une installation automatique échoue, explique l'erreur simplement et donne le site officiel (nodejs.org, git-scm.com, cli.github.com) en dernier recours.
 - Ensuite la personne doit lancer `gh auth login` (compte GitHub membre de l'organisation `luxmodernis`). Tu ne saisis jamais de mot de passe ni de jeton à sa place : donne-lui la commande à lancer elle-même, dans l'onglet Terminal.
@@ -88,7 +88,7 @@ gh repo create luxmodernis/<slug> --private --source . --remote origin --push
 
 Je ne peux pas me connecter à la place de la personne. Guide-la, une commande à la fois, **dans le terminal de l'application** (onglet Terminal) ou le sien :
 
-1. `npx vercel login` (connexion par e-mail ou GitHub dans le navigateur).
+1. `npx vercel login` (sur PC : `npx.cmd vercel login`) : connexion par e-mail ou GitHub dans le navigateur. La personne le lance elle-même ; toutes les commandes suivantes, lance-les toi-même.
 2. Création et liaison du projet, depuis le dossier **frère** du projet (jamais dans le dépôt). Une seule commande, sans question, testée :
    ```bash
    mkdir ../deploy-<slug>
