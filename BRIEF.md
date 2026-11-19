@@ -122,6 +122,10 @@ Le projet finit dans un LMS, sur des téléphones parfois anciens. Ces règles s
 - **Aucun appel externe** (CDN, analytics, vidéos en ligne).
 - Avant chaque livraison : `npm run scorm`, puis rappelle à la personne de tester le zip sur SCORM Cloud et de regarder le poids annoncé.
 
+## Figma (si le projet part de maquettes Figma)
+
+Le connecteur Figma demande une connexion que Claude ne peut pas faire à la place de la personne. Si ses outils Figma sont refusés ou demandent une connexion, ne boucle pas et ne cherche pas de contournement : demande à la personne de taper `/mcp` dans la conversation, de choisir `figma`, puis de se connecter dans le navigateur qui s'ouvre. Une fois connecté, reprends là où tu en étais.
+
 ## Règles à respecter pendant tout le projet (elles sont aussi dans `CLAUDE.md`)
 
 - Ne jamais rendre le dépôt public. Ne jamais committer de mot de passe, jeton ou clé.
